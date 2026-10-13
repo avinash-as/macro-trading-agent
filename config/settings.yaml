@@ -4,7 +4,7 @@
 apis:
   apify:
     token: "YOUR_APIFY_TOKEN_HERE"
-    actor_id: "apify/actor-macro-economic-calendar"  # Replace with actual actor ID
+    actor_id: "pintostudio/economic-calendar-data-investing-com"
     base_url: "https://api.apify.com/v2"
   tavily:
     token: "YOUR_TAVILY_TOKEN_HERE"
