@@ -1,0 +1,94 @@
+# Macro Trading ML Pipeline Configuration
+
+# API Configuration (replace with your actual tokens)
+apis:
+  apify:
+    token: "YOUR_APIFY_TOKEN_HERE"
+    actor_id: "apify/actor-macro-economic-calendar"  # Replace with actual actor ID
+    base_url: "https://api.apify.com/v2"
+  tavily:
+    token: "YOUR_TAVILY_TOKEN_HERE"
+    base_url: "https://api.tavily.com"
+  exa:
+    token: "YOUR_EXA_TOKEN_HERE"
+    base_url: "https://api.exa.ai"
+
+# Data Ingestion Parameters
+data_ingestion:
+  lookback_days: 180
+  macro_calendar_sources:
+    - "investing.com"
+    - "forexfactory.com"
+    - "tradingeconomics.com"
+  news_sources:
+    - "reuters.com"
+    - "bloomberg.com"
+    - "wsj.com"
+    - "ft.com"
+  key_economic_events:
+    - "CPI"
+    - "FOMC"
+    - "NFP"
+    - "GDP"
+    - "PCE"
+    - "ISM Manufacturing"
+    - "ISM Services"
+    - "Retail Sales"
+    - "Industrial Production"
+    - "Unemployment Rate"
+    - "Fed Funds Rate"
+    - "ECB Rate Decision"
+    - "BoE Rate Decision"
+    - "BoJ Rate Decision"
+
+# Feature Engineering Parameters
+feature_engineering:
+  time_windows:
+    - 1   # 1 day
+    - 3   # 3 days
+    - 7   # 1 week
+    - 14  # 2 weeks
+    - 30  # 1 month
+  surprise_threshold: 0.1  # 10% surprise threshold
+  rolling_windows: [5, 10, 20, 60]
+  lag_periods: [1, 2, 3, 5, 10]
+
+# Model Parameters
+modeling:
+  target_horizon_days: 5  # Predict P&L over 5 days
+  walk_forward:
+    train_window: 60      # 60 days training
+    test_window: 10       # 10 days testing
+    step_size: 5          # Step forward by 5 days
+  models:
+    - "random_forest"
+    - "xgboost"
+    - "lightgbm"
+    - "linear_regression"
+  hyperparameter_tuning:
+    enabled: true
+    n_trials: 50
+    cv_folds: 3
+
+# Visualization Parameters
+visualization:
+  chart_style: "seaborn-v0_8-darkgrid"
+  color_palette: "viridis"
+  figure_size: [14, 8]
+  dpi: 150
+  output_formats: ["png", "html"]
+
+# Output Paths
+paths:
+  raw_data: "data/raw"
+  processed_data: "data/processed"
+  models: "outputs/models"
+  charts: "outputs/charts"
+  reports: "outputs/reports"
+  logs: "logs"
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/pipeline.log"
